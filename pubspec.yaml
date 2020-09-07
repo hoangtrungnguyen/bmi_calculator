@@ -14,6 +14,7 @@ dependencies:
 
   cupertino_icons: ^0.1.3
   font_awesome_flutter:
+  english_words:
 
 dev_dependencies:
   flutter_test:

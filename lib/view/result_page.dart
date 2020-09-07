@@ -1,41 +1,49 @@
-import 'package:bmicalculator/brain/calculator_brain.dart';
-import 'package:bmicalculator/configure.dart';
-import 'package:bmicalculator/view/component/bmi_bottom_button.dart';
+import 'package:bmicalculator/brain/brain.dart';
+import 'package:bmicalculator/style/theme.dart';
+import 'package:bmicalculator/view/component/bmi_button.dart';
 import 'package:flutter/material.dart';
 
 class ResultPage extends StatelessWidget {
-  CalculatorBrain brain;
-
-  ResultPage(this.brain);
-
   @override
   Widget build(BuildContext context) {
+    CalculatorBrain brain = ModalRoute.of(context).settings.arguments;
     return Scaffold(
-      backgroundColor: kInactiveCardColour,
       body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+        child: Stack(
           children: [
-            SizedBox(height: 20,),
-            Text(
-              "Your Result",
-              style: kTitleTextStyle,
-            ),
-            Expanded(
+            Positioned(
+                top: 20,
+                left: 20,
+                child: Text(
+                  "Your Result",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 36,
+                      fontWeight: FontWeight.bold),
+                )),
+            Positioned(
+              top: 100,
+              left: 20,
+              right: 20,
+              bottom: 120,
               child: Card(
-                margin: EdgeInsets.all(16),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                  Text("${brain.getResult()}",style: kResultTextStyle,),
-                  Text("${brain.calculateBMI()}",style: kBMITextStyle,),
-                  Text('${brain.getInterpretation()}',textAlign: TextAlign.center,style: kBodyTextStyle,),
-                ]),
+                  children: [
+                    Text("Result",style: kResultTextStyle,),
+                    Text("${brain.calculateBMI()}",style: kBMITextStyle,),
+                    Text("${brain.getInterpretation()}",style: kBodyTextStyle,textAlign: TextAlign.center
+                      ,),
+                  ],
+                ),
               ),
             ),
-            BMIBottomBtn(onTap: (){
-              Navigator.of(context).pop();
-            },label: "Re-Calculate",)
+            Positioned(bottom: 0,left: 0,right: 0,height: 100,
+            child: BMIButton(
+              title: "RE-CALCULATE",
+              onTap: (){
+                Navigator.of(context).pop();
+            },),)
           ],
         ),
       ),
